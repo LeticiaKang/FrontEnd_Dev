@@ -1,0 +1,4 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var HelloTS_Compiler_1 = require("./HelloTS_Compiler");
+(0, HelloTS_Compiler_1.pringHello)();
