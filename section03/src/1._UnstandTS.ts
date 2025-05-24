@@ -7,7 +7,7 @@ function unknownExam() {
     let c: unknown = true;
     let d: unknown = null;
     let e: unknown = undefined;
-    // 모든 타입의 super타입이라 
+    // 모든 타입의 super타입이라
     // 모든 타입이 upCast가능하다.
 
     let unknownVar: unknown;
@@ -49,7 +49,7 @@ function voidFunc() {
         return undefined;
     };
 
-    // void이지만 return을 undefined로 쓸 수 있다. 
+    // void이지만 return을 undefined로 쓸 수 있다.
 }
 
 
@@ -74,7 +74,7 @@ function anyExam(){
     // anyVar = neverVar;
     // neverVar = anyVar;
 
-    // undefined > never 
+    // undefined > never
     // neverVar = undefinedVar;
-    undefinedVar = neverVar;
+    // undefinedVar = neverVar;
 }
