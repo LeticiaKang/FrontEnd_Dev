@@ -71,7 +71,6 @@ function login3(user:User){
 };
 
 
-
 /**
  * 서로소 유니온 타입을 사용하면 좋은 사례
  */
