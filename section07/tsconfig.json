@@ -1,0 +1,13 @@
+{
+  // TS는 컴파일과정에선 '오류가 없는지 검사하고' JS로 컴파일하게 된다.
+  // ComplierOptions은 '얼마나 엄격하게 타입오류를 검사할지', 'JS버전은 어떻게 할지' 등을 개발자가 설정할 수 있다. 
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "target": "ESNext",    // JS버전을 설정한다. 구형 버전을 사용해야 하면 이 옵션이 중요하게 사용된다.
+    "module": "ESNext", // commonjs.와 esnext를 비교해보자 
+    "outDir": "dist",   // js 파일을 모음
+    "strict": true,    // ts 검사를 엄격하게 사용한다.
+    "moduleDetection": "force",  // ts파일을 개별 모듈로 인식(글로벌 모듈을 하지 않겠다)
+  },
+  "include": ["src"], //src 아래 있는 모든 파일을 컴파일해라
+}
