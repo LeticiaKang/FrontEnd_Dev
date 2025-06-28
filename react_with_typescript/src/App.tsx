@@ -1,11 +1,31 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect, useReducer } from 'react';
 import './App.css';
 import Editor from "./component/Editor";
 import { Todo } from '@/types/todo';
 import TodoItem from './component/TodoItem';
 
+type Action = 
+  | {
+      type: "CREATE",
+      data: {
+        id: number;
+        content: string;
+      };
+    }
+  | { type: "DELETE", id: number; }
+
+
+function reducer(state: Todo[], action: Action) {
+  switch (action.type) {
+    case "CREATE":
+      return [...state, action.data];
+    case "DELETE":
+      return state.filter((todo) => todo.id !== action.id);
+  }
+}
+
 function App() {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todos, dispatch] = useReducer(reducer, []);
 
   const idRef = useRef(1);
 
@@ -21,20 +41,23 @@ function App() {
       return;
     }
 
-    setTodos([
-      ...todos, // 원본값을 넣어준다.
-      {
+    dispatch({
+      type: "CREATE",
+      data: {
         id: idRef.current++,
-        content: text,
-      },
-    ]);
+        content: text
+      }
+    })
   };
 
   /**
    * 삭제 버튼
    */
   const onClickDelButton = (id: number) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+    dispatch({
+      type: "DELETE",
+      id: id
+    })
   };
 
   useEffect(() => {
