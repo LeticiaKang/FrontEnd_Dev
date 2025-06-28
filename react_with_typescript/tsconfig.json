@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "module": "CommonJS",
+        "strict": true,
+        "allowJs": true,
+        "esModuleInterop": true,
+        "jsx": "react-jsx",
+        "baseUrl": "src",
+        "paths": {
+            "@/*": ["*"]
+        }
+    },
+    // 기존 js 만들어진 프로젝트를 "타입스트립트"로 변경할 때 오류가 적게 나게하기 위해선
+    // 개별로 바꾸는게 좋다.
+    "include": ["src"]
+}
