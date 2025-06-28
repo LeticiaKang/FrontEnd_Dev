@@ -1,7 +1,7 @@
-import { useRef, useEffect, useReducer } from 'react';
-import './App.css';
+import { useRef, useEffect, useReducer, createContext, useContext } from 'react';
+import './App.css'
 import Editor from "./component/Editor";
-import { Todo } from '@/types/todo';
+import { Todo } from './types/todo';
 import TodoItem from './component/TodoItem';
 
 type Action = 
@@ -14,6 +14,21 @@ type Action =
     }
   | { type: "DELETE", id: number; }
 
+export const TodoStateContext = createContext<Todo[] | null>(null);
+export const TodoDispatchContext = createContext<{
+  onClickAdd: (text: string) => void;
+  onClickDelButton: (id: number) => void;
+} | null>(null);
+
+export function useTodoDispatch() {
+  const dispatch = useContext(TodoDispatchContext);
+  
+  if (!dispatch) {
+    throw new Error("useTodoDispatch must be used within a TodoDispatchProvider");
+  }
+
+  return dispatch;
+}
 
 function reducer(state: Todo[], action: Action) {
   switch (action.type) {
@@ -29,12 +44,6 @@ function App() {
 
   const idRef = useRef(1);
 
-  /**
-   * 추가하기
-   * 
-   * @param text 
-   * @returns 
-   */
   const onClickAdd = (text: string) => {
     if(text === "") {
       alert("텍스트를 입력해주세요.");
@@ -50,9 +59,6 @@ function App() {
     })
   };
 
-  /**
-   * 삭제 버튼
-   */
   const onClickDelButton = (id: number) => {
     dispatch({
       type: "DELETE",
@@ -67,19 +73,16 @@ function App() {
   return (
     <div className="App">
       <h1>TODO LIST</h1>
-      <Editor onClickAdd={onClickAdd} />
-        
-        <div>
-          {todos.map((todo, index) => (
-            <TodoItem 
-              key={todo.id} 
-              {...todo} 
-              displayNumber={index + 1}
-              onClickDelButton={onClickDelButton}
-            />
-          ))}
-        </div>
-        
+      <TodoStateContext.Provider value={todos}>
+        <TodoDispatchContext.Provider value={{ onClickAdd, onClickDelButton }}>
+          <Editor />
+            <div>
+              {todos.map((todo, index) => (
+                <TodoItem key={todo.id} {...todo} displayNum={index+1}/>
+              ))}
+            </div>
+        </TodoDispatchContext.Provider>
+      </TodoStateContext.Provider>
     </div>
   );
 }

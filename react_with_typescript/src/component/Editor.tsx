@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { EditorProps } from "@/types/props"
+import { useState, useContext } from "react";
+import { useTodoDispatch } from "App";
 
-
-export default function Editor(props: EditorProps) {
+export default function Editor() {
+    const dispatch = useTodoDispatch();
     const [text, setText] = useState("");
 
     const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -10,7 +10,7 @@ export default function Editor(props: EditorProps) {
     };
 
     const onClickButton = () => {
-        props.onClickAdd(text);
+        dispatch.onClickAdd(text);
         setText("");
     };
 

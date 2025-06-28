@@ -1,20 +1,21 @@
 import { Todo } from "@/types/todo";
+import { useTodoDispatch } from "App";
 
 interface Props extends Todo {
-    onClickDelButton: (id: number) => void;
-    displayNumber: number;
+    displayNum: number;
 };
 
 export default function TodoItem(props: Props) {
+    const dispatch = useTodoDispatch();
 
     const onClickDelete = () => {
-        props.onClickDelButton(props.id);
+        dispatch.onClickDelButton(props.id);
     }
 
     return (
         <div>
-            <ul key={props.id}>
-                {props.displayNumber}. {props.content}
+            <ul>
+                {props.displayNum}. {props.content}
                 <button onClick={onClickDelete}>삭제</button>
             </ul>
             
